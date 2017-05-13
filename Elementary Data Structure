@@ -1,0 +1,90 @@
+Chapter #2 Elementary Data Structures
+This chapter dealing with arrays, linked lists, stacks, queues, and other simple variants. 
+
+Arrays
+  An array is a fixed number of data items that are stored contiguously and that are accessible  by an index. The i th element of 
+  array A is A[i]. A simple example of the use of an array is given by the following program, which prints out all the prime numbers
+  less than 1000.
+  
+  #include <iostream>
+  using namespace std;
+  const int N = 1000;
+  int main (){
+    int i, j, a[N+1];
+    for (a[1] = 0, i = 2; i <= N; i++) a[i] = 1; // initializing array a with {0,1,1,1,1,1,1...}
+    for (i = 2; i <= N/2; i++)                   // i from 2 ~ 500
+      for (j = 2; j <= N/i; j++)                 // j from 2 ~ 1000/i
+        a[i*j] = 0;                              // all combination of i and j are set to zero they are not prime number.  
+    for (i = 1; i <= N; i++)                     // only print out the nonzero number which are prime number
+      if (a[i]) cout << i << " ";
+      
+    cout << "\n";
+  }
+  
+  For matrix, it is two dimensional array. For example, a two 3 by 3 matrices' dot product is given by 
+  
+  for (i = 0; i < N; i++)
+    for (j = 0; j < N; j++)
+      for (k = 0; r[i][j] = 0; k < N; k++)
+        r[i][j] += p[i][k]*q[k][j];
+        
+  The above method need N^3 operations for N by N matrix. It is also called Naive Method.
+  
+  A famous Strassen's Method for matrix multiplication. it is very similar in concept to the polynomial multiplication method.
+  Strassen's method is to divide the size of the problem in half; this corresponds to dividing each of the matrices into quarters, 
+  each N/2 by N/2. Properties: Two N by N matrix can be multiplied using about N^2.81 multiplications. 
+  The first step is called divide and conquer method. 
+  1) Divide matrices A and B in 4 submatrices of size N/2 by N/2;
+  2) Calculate following values recursively.
+  http://www.geeksforgeeks.org/wp-content/uploads/strassen_new.png
+  Strassen's method is similar to above simple divide and conquer method in the sense that this method also divide matrices to 
+  submatrics of size N/2 by N/2. For Strassen's method they are organized in the new method as shown below. 
+  http://www.geeksforgeeks.org/wp-content/uploads/stressen_formula_new_new.png
+  
+  This Stressen's Method is not preferred for practical applications for some reasons. 
+  1) The constants used in Strassen’s method are high and for a typical application Naive method works better.
+  2) For Sparse matrices, there are better methods especially designed for them.
+  3) The submatrices in recursion take extra space.
+  4) Because of the limited precision of computer arithmetic on noninteger values,
+     larger errors accumulate in Strassen’s algorithm than in Naive Method
+     
+     
+Linked list
+  The primary advantage of linked list over arrays is that linked lists can grow and shrink in size during their lifetime. 
+  Another advantage is that they provide flexibility in allowing the items to be rearranged efficiently. Linked list is very 
+  efficient to make change as delet, add or change order of the elements, just by changing the link. However, in array, we 
+  have to move all the elements and resign the value to get the same results. 
+  
+  struct node
+    {int key; struct node *next};      // each node containing an integer and a pointer to the next node
+  struct node *head, *z;
+  head = new node; z = new node;      // nodes are actually created only when the build in function new is called. 
+  head -> next = z; z -> next = z;    // the arrow is used to follow pointers through structures.
+  
+  Josephus Problem int he spirit of the sieve of Etratosthenes. 
+  
+  struct node 
+  {int key; struct node *next;};
+  int main(){
+    int i, N, M;
+    struct node *t,*x;
+    cout << "input the total number of people and number they choose: " << endl;
+    cin >> N >> M;
+    t = new node; t -> key = 1; x = t;
+    for (i = 2; i <= N; i++){
+      t  -> next = new node;
+      t = t -> next; t -> key = i;
+    }
+    t -> next = x;
+    while (t != t -> next)
+    {
+      for (i = 1; i < M; i++) t = t-> next;
+      cout << t -> next ->key << " ";
+      x = t -> next; t ->next = x ->next;
+      delete x;
+    }
+    cout << t -> key << "\n";
+  }
+  
+  
+  
