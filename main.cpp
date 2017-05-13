@@ -15,7 +15,6 @@ int gcd (int x, int y)
         cout << "sequence of x is " << x << endl;
     }
 
-
     return y;
 }
 
